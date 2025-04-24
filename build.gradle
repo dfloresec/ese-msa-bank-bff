@@ -50,6 +50,9 @@ dependencies {
     
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.mapstruct:mapstruct'
+	testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+	
 }
 
 tasks.named('test') {

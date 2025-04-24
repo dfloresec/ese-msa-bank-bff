@@ -25,7 +25,7 @@ public class SegCustomerController {
 
 	@GetMapping(value = "/v1/bank/customers")
 	@ResponseStatus(HttpStatus.OK)
-	private List<CustomerDto> getCustomers(@RequestHeader("Authorization") String bearerToken) {
+	public List<CustomerDto> getCustomers(@RequestHeader("Authorization") String bearerToken) {
 		securityService.validateTolen(bearerToken.replace(TOKEN_PREFIX, ""));
 		return customerService.getCustomers();
 	}
