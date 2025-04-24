@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.9'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+    mapstructVersion = "1.6.0.Beta1"
+    lombokVersion = "1.18.30"
+    lombokMapstructBindingVersion = "0.2.0"
+}
+
+dependencies {
+    implementation group: 'org.mapstruct' , name: 'mapstruct' , version: "${mapstructVersion}"
+    compileOnly group: 'org.projectlombok' , name: 'lombok' , version: '${lombokVersion}'
+	compileOnly "org.mapstruct:mapstruct:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}", "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+	
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.3'
+	//implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	//implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+	
+	
+	
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+	
+	implementation 'io.github.openfeign:feign-okhttp:11.10'
+    implementation group: 'org.springframework.cloud' , name: 'spring-cloud-starter-openfeign' , version: '4.0.3'
+    implementation group: 'com.netflix.feign', name: 'feign-jackson', version: '8.18.0'
+    
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompileOnly 'org.mapstruct:mapstruct'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs += [
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.verbose=true',
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
